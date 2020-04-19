@@ -5,10 +5,17 @@ import { getLeases } from '../services/service';
 import LeaseItem from './LeaseItem';
 import { ILeasesProps } from '../interfaces/index';
 import Spinner from './Spinner';
+import * as actions from '../actions/index';
 
 class LeaseList extends React.Component<ILeasesProps> {
     componentDidMount() {
-        store.dispatch(getLeases());
+        store.dispatch(actions.getLeases(true, []));
+        return getLeases().then(response => {
+            store.dispatch(actions.getLeases(false, response.data));
+        }).catch(error => {
+            store.dispatch(actions.getLeases(false, []));
+            console.error(error);
+        });
     }
 
     render() {

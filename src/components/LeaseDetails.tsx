@@ -4,11 +4,18 @@ import { ILeaseDetailsProps } from "../interfaces";
 import store from "../store/store";
 import { getLeaseDetails } from "../services/service";
 import Spinner from './Spinner';
+import * as actions from '../actions/index';
 
 class LeaseDetails extends React.Component<ILeaseDetailsProps> {
     componentDidMount() {
         const id = this.getUrlParam();
-        store.dispatch(getLeaseDetails(id));
+        store.dispatch(actions.getLeaseDetails(true, {}));
+        return getLeaseDetails(id).then(response => {
+            store.dispatch(actions.getLeaseDetails(false, response.data));
+        }).catch(error => {
+            store.dispatch(actions.getLeaseDetails(false, {}));
+            console.error(error);
+        });
     }
 
     getUrlParam() {
@@ -38,9 +45,9 @@ class LeaseDetails extends React.Component<ILeaseDetailsProps> {
 
                                 return (
                                     <div className="form-group row" key={key}>
-                                        <label htmlFor="staticEmail" className="col-sm-3 col-form-label">{this.readableLabel(key)}</label>
+                                        <label htmlFor={key} className="col-sm-3 col-form-label">{this.readableLabel(key)}</label>
                                         <div className="col-sm-9">
-                                            <input type="text" readOnly className="form-control-plaintext" id="staticEmail"
+                                            <input type="text" readOnly className="form-control-plaintext" id={key}
                                            value={this.props.leaseDetails[key]} />
                                         </div>
                                     </div>
