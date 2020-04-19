@@ -22,3 +22,15 @@ export interface ILeaseDetailsProps {
     leaseDetails: Object;
     isLoading: boolean;
 }
+
+export interface IGetLeases {
+    type: string;
+    isLoading: boolean;
+    payload: any[],
+}
+
+export interface IGetLeaseDetails {
+    type: string;
+    isLoading: boolean;
+    payload: object,
+}
