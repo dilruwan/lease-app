@@ -37,6 +37,12 @@ yarn start
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+### Runs tests
+ 
+```
+npm run test
+```
+
 ### Builds the app for production to the `build` folder
 ```
 npm run build
